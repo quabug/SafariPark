@@ -12,6 +12,9 @@
     <AssemblyName>SafariPark.Web</AssemblyName>
     <!-- Resolve fingerprinted framework assets through the generated importmap. -->
     <OverrideHtmlAssetPlaceholders>true</OverrideHtmlAssetPlaceholders>
+    <!-- WASM AOT: interpreter per-frame for a PBR scene is ~5-10× slower than
+         emcc-compiled IL. Release publish pays the one-time AOT link cost. -->
+    <RunAOTCompilation Condition="'$(Configuration)' == 'Release'">true</RunAOTCompilation>
   </PropertyGroup>
 
   <ItemGroup>

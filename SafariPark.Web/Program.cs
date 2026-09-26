@@ -35,6 +35,8 @@ public static partial class Program
     private static double s_windowStartMs;
     private static int s_framesInWindow;
     private static double s_lastFps = -1;
+    private static double s_updateMs;
+    private static double s_renderMs;
 
     /// <summary>GLBs fetched by main.js before <see cref="InitAsync"/> — the simulation's
     /// readAsset callback is synchronous, so the browser pre-buffers every asset.</summary>
@@ -99,10 +101,13 @@ public static partial class Program
         {
             var startMs = s_clock.Elapsed.TotalMilliseconds;
             s_game.Update(1f / 60f);
+            var updateMs = s_clock.Elapsed.TotalMilliseconds;
             s_game.RenderFrame();
+            var renderMs = s_clock.Elapsed.TotalMilliseconds;
+            s_updateMs += updateMs - startMs;
+            s_renderMs += renderMs - updateMs;
             s_frames++;
             s_framesInWindow++;
-
             // Async WebGPU validation turns silent frame drops into a visible failure.
             var error = s_renderer.TakeGpuError();
             if (error.Length > 0) throw new InvalidOperationException($"WebGPU error: {error}");
@@ -211,6 +216,16 @@ public static partial class Program
     internal static void DebugSpawnAhead(int species) =>
         s_game?.DebugSpawnAhead((Species)species);
 
+    /// <summary>Frame CPU split (sim vs renderer), averaged since last call — browser QA.</summary>
+    [JSExport]
+    internal static string DebugFrameStats()
+    {
+        if (s_framesInWindow <= 0) return "{}";
+        var u = s_updateMs / s_framesInWindow;
+        var r = s_renderMs / s_framesInWindow;
+        s_updateMs = 0; s_renderMs = 0; s_framesInWindow = 0;
+        return $"{{\"updateMs\":{u:F2},\"renderMs\":{r:F2}}}";
+    }
     /// <summary>JSON snapshot of the controlled animal's physics state — browser QA.</summary>
     [JSExport]
     internal static string DebugCatState() => s_game?.DebugCatState() ?? "{}";
