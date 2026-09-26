@@ -127,7 +127,23 @@ public sealed class GltfRig : IDisposable
     {
         var materialIds = new int[asset.Materials.Length];
         for (var i = 0; i < asset.Materials.Length; i++)
-            materialIds[i] = pbr.Materials.AddMaterial(asset.Materials[i], asset.Images);
+        {
+            try
+            {
+                materialIds[i] = pbr.Materials.AddMaterial(asset.Materials[i], asset.Images);
+            }
+            catch (DllNotFoundException)
+            {
+                // No native libktx (browser wasm): drop image refs so materials degrade to
+                // their authored factors — Quaternius rigs are mostly solid-color anyway.
+                var m = asset.Materials[i];
+                materialIds[i] = pbr.Materials.AddMaterial(m with
+                {
+                    BaseColorImage = -1, MetallicRoughnessImage = -1, NormalImage = -1,
+                    OcclusionImage = -1, EmissiveImage = -1,
+                }, []);
+            }
+        }
         var fallback = -1;
         int MatOf(int index) => index >= 0 && index < materialIds.Length
             ? materialIds[index]
