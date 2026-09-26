@@ -1,0 +1,3 @@
+[submodule "ParadiseEngine"]
+	path = ParadiseEngine
+	url = https://github.com/ParadiseEngine/ParadiseEngine.git

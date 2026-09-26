@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.WebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>14.0</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <RootNamespace>SafariPark.Web</RootNamespace>
+    <AssemblyName>SafariPark.Web</AssemblyName>
+    <!-- Resolve fingerprinted framework assets through the generated importmap. -->
+    <OverrideHtmlAssetPlaceholders>true</OverrideHtmlAssetPlaceholders>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SafariPark.Core\SafariPark.Core.csproj" />
+    <ProjectReference Include="..\ParadiseEngine\src\Paradise.Rendering.Browser\Paradise.Rendering.Browser.csproj" />
+    <ProjectReference Include="..\ParadiseEngine\src\Paradise.Rendering.Pbr\Paradise.Rendering.Pbr.csproj" />
+    <ProjectReference Include="..\ParadiseEngine\src\Paradise.Diagnostics\Paradise.Diagnostics.csproj" />
+  </ItemGroup>
+
+</Project>

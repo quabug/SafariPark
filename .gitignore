@@ -1,0 +1,17 @@
+# Build outputs
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+[Pp]ublish/
+TestResults/
+
+# Slang / NuGet caches
+.slang-cache/
+
+# IDE
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.userprefs

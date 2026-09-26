@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyName>RigView</AssemblyName>
+    <RootNamespace>RigView</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../ParadiseEngine/src/Paradise.Rendering.WebGPU/Paradise.Rendering.WebGPU.csproj" />
+    <ProjectReference Include="../../ParadiseEngine/src/Paradise.Rendering.Pbr/Paradise.Rendering.Pbr.csproj" />
+    <ProjectReference Include="../../ParadiseEngine/src/Paradise.Assets.Textures/Paradise.Assets.Textures.csproj" />
+    <ProjectReference Include="../RigCheck/../../SafariPark.Core/SafariPark.Core.csproj" />
+  </ItemGroup>
+</Project>

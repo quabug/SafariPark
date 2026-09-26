@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>14.0</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <RootNamespace>SafariPark</RootNamespace>
+    <AssemblyName>SafariPark</AssemblyName>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SafariPark.Core\SafariPark.Core.csproj" />
+    <!-- Host-only engine references: SDL windowing, Dawn renderer, ImGui HUD. -->
+    <ProjectReference Include="..\ParadiseEngine\src\Paradise.Windowing.Sdl\Paradise.Windowing.Sdl.csproj" />
+    <ProjectReference Include="..\ParadiseEngine\src\Paradise.Rendering.WebGPU\Paradise.Rendering.WebGPU.csproj" />
+    <ProjectReference Include="..\ParadiseEngine\src\Paradise.Ui.ImGui\Paradise.Ui.ImGui.csproj" />
+    <ProjectReference Include="..\ParadiseEngine\src\Paradise.Diagnostics\Paradise.Diagnostics.csproj" />
+    <ProjectReference Include="..\ParadiseEngine\src\Paradise.Features.Toml\Paradise.Features.Toml.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Versions mirror ParadiseEngine/src/Directory.Packages.props; the desktop host calls
+         Hexa.NET.ImGui directly for the HUD and Zio for the font mount. -->
+    <PackageReference Include="Hexa.NET.ImGui" Version="2.2.9" />
+    <PackageReference Include="Zio" Version="0.24.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The game reads GLBs from ./Assets beside the binary at runtime. -->
+    <None Include="..\SafariPark.Core\Assets\*.glb" CopyToOutputDirectory="PreserveNewest" LinkBase="Assets" />
+  </ItemGroup>
+
+</Project>
