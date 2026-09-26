@@ -4,11 +4,13 @@
 import { createServer } from 'node:http';
 import { createReadStream, existsSync, statSync } from 'node:fs';
 import { join, extname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const port = Number(process.argv[2]) || 8756;
 const root = resolve(process.argv[3] || 'bin/Release/net10.0/publish/wwwroot');
-// The game GLBs live next to the core project, not in the publish output.
-const assetRoot = resolve(new URL('../../SafariPark.Core/Assets', import.meta.url).pathname);
+// The game GLBs live next to the core project; fileURLToPath keeps Windows
+// drive letters intact (a URL pathname is "/C:/...", not a valid path).
+const assetRoot = resolve(fileURLToPath(new URL('../SafariPark.Core/Assets', import.meta.url)));
 
 const mime = {
     '.html': 'text/html; charset=utf-8',

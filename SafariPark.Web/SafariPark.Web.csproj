@@ -21,4 +21,10 @@
     <ProjectReference Include="..\ParadiseEngine\src\Paradise.Diagnostics\Paradise.Diagnostics.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- The page fetches GLBs from ./assets/ — copy them into wwwroot so the
+         publish output is self-contained and servable by any static host. -->
+    <Content Include="..\SafariPark.Core\Assets\*.glb" LinkBase="wwwroot\assets" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+
 </Project>
